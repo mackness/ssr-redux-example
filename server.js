@@ -47,18 +47,15 @@ function handleRender(req, res) {
 
   // Render the component to a string
   const html = renderToString(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+	  <Provider store={store}>
+	    <App />
+	  </Provider>,
   )
 
   // Grab the initial state from our Redux store
   const initialState = store.getState()
 
-  console.log(initialState)
-
   // Send the rendered page back to the client
-  console.log('should be initial markup', renderFullPage(html, initialState))
   res.send(renderFullPage(html, initialState))
 }
 
