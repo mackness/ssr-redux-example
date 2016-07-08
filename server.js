@@ -1,15 +1,15 @@
-require("babel-register");
 import path from 'path'
 import Express from 'express'
 import React from 'react'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import todoApp from './reducers/index'
-import App from './components/App'
-import Footer from './components/Footer'
-import AddTodo from './containers/AddTodo'
-import VisibleTodoList from './containers/VisibleTodoList'
 import { renderToString } from 'react-dom/server'
+
+import todoApp from './src/reducers/index'
+import App from './src/components/App'
+import Footer from './src/components/Footer'
+import AddTodo from './src/containers/AddTodo'
+import VisibleTodoList from './src/containers/VisibleTodoList'
 
 const app = Express()
 const port = 3000
@@ -26,6 +26,7 @@ new WebpackDevServer(webpack(config), {
 app.use(handleRender)
 
 function handleRender(req, res) {
+	console.log('this is being used')
   // Create a new Redux store instance
   const store = createStore(todoApp)
 
@@ -48,8 +49,8 @@ function handleRender(req, res) {
 }
 
 function renderFullPage(html, initialState) {
-	return `
-	  <!doctype html>
+	return 
+	`<!doctype html>
 	  <html>
 	    <head>
 	      <title>Redux Universal Example</title>
