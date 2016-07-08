@@ -5,10 +5,8 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import { renderToString } from 'react-dom/server'
 
-import todoApp from './src/reducers/index'
+import todoApp from './src/reducers'
 import App from './src/components/App'
-import Footer from './src/components/Footer'
-import AddTodo from './src/containers/AddTodo'
 import VisibleTodoList from './src/containers/VisibleTodoList'
 
 const app = Express()
@@ -25,45 +23,43 @@ new WebpackDevServer(webpack(config), {
 
 app.use(handleRender)
 
+function renderFullPage(html, initialState) {
+	return (
+		`<!doctype html>
+		  <html>
+		    <head>
+		      <title>Redux Universal Example</title>
+		    </head>
+		    <body>
+		      <div id="root">${html}</div>
+		      <script>
+		        window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
+		      </script>
+		      <script src="/static/bundle.js"></script>
+		    </body>
+		  </html>`
+	)
+}
+
 function handleRender(req, res) {
-	console.log('this is being used')
   // Create a new Redux store instance
   const store = createStore(todoApp)
 
   // Render the component to a string
   const html = renderToString(
-    <Provider store={store}>
-		  <div>
-		    <AddTodo />
-		    <VisibleTodoList />
-		    <Footer />
-		  </div>
-    </Provider>
+  <Provider store={store}>
+    <App />
+  </Provider>,
   )
 
   // Grab the initial state from our Redux store
   const initialState = store.getState()
 
-  // Send the rendered page back to the client
-  res.send(renderFullPage(html, initialState))
-}
+  console.log(initialState)
 
-function renderFullPage(html, initialState) {
-	return 
-	`<!doctype html>
-	  <html>
-	    <head>
-	      <title>Redux Universal Example</title>
-	    </head>
-	    <body>
-	      <div id="root">${html}</div>
-	      <script>
-	        window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
-	      </script>
-	      <script src="/static/bundle.js"></script>
-	    </body>
-	  </html>
-	  `
+  // Send the rendered page back to the client
+  console.log('should be initial markup', renderFullPage(html, initialState))
+  res.send(renderFullPage(html, initialState))
 }
 
 app.listen(port, 'localhost', function (err, result) {
