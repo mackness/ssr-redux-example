@@ -41,7 +41,10 @@
     "webpack-dev-server": "^1.12.1"
   },
   "dependencies": {
+    "express": "^4.14.0",
     "react": "^0.14.6",
-    "react-dom": "^0.14.6"
+    "react-dom": "^0.14.6",
+    "react-redux": "^4.4.5",
+    "redux": "^3.5.2"
   }
 }
