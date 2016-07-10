@@ -7,6 +7,7 @@ SAMPLE SSR REDUX APP
 ```
 npm install
 npm install -g babel-cli
+npm install --save babel-preset-stage-2
 npm start
 open http://localhost:3000
 ```
