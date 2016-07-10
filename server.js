@@ -13,13 +13,18 @@ const app = Express()
 const port = 3000
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
+var webpackMiddleware = require('webpack-dev-middleware');
 var config = require('./webpack.config');
 
-new WebpackDevServer(webpack(config), {
-  publicPath: config.output.publicPath,
-  hot: true,
-  historyApiFallback: true
-})
+// new WebpackDevServer(webpack(config), {
+//   publicPath: config.output.publicPath,
+//   hot: true,
+//   historyApiFallback: true
+// })
+
+var compiler = webpack(config)
+app.use(webpackMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }))
+app.use(webpackMiddleware(compiler))
 
 app.use(handleRender)
 
