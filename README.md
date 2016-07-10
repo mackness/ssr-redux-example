@@ -1,13 +1,12 @@
 
-React Hot Boilerplate
+SAMPLE SSR REDUX APP
 =====================
-
-The minimal dev environment to enable live-editing React components.
 
 ### Usage
 
 ```
 npm install
+npm install -g babel-cli
 npm start
 open http://localhost:3000
 ```
